@@ -9,6 +9,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+const smtp_login = process.env.SMTP_LOGIN || '---';
+const smtp_password = process.env.SMTP_PASSWORD || '---';
+
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -18,8 +21,8 @@ const transporter = nodemailer.createTransport({
     },
     service: 'gmail',
     auth: {
-        user: '2805nika@gmail.com',
-        pass: 'xrrkbguufnmjczqn'
+        user: smtp_login,
+        pass: smtp_password
     }
 });
 
@@ -49,8 +52,8 @@ app.post('/sendMessage', async function (req, res) {
 
 });
 
-//let port = process.env.PORT || 3010;
+const port = process.env.PORT || 3010;
 
-app.listen(3010, function () {
+app.listen(port, function () {
     console.log('example app listening on port 3000!')
 });
